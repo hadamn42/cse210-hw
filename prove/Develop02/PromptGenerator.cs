@@ -1,21 +1,44 @@
+using System.IO;
+using System.Collections.Generic;
+
 public class PromptGenerator
 {
-    List<string> _prompts = new List<string>()
+    List<string> _prompts = new List<string>();
+
+    public void CreatePomptList()
     {
-        "Who was the most interesting person I interacted with today?",
-        "What was the best part of my day?",
-        "How did I see the hand of the Lord in my life today?",
-        "What was the strongest emotion I felt today?",
-        "If I had one thing I could do over today, what would it be?",
-        "What was my greatest blessing today?",
-        "How did I help my wife today?",
-        "What did I learn from the scriptures today?"
-    };
+        string[] lines = File.ReadAllLines("prompt.txt");
+        foreach (string line in lines)
+        {
+            _prompts.Add(line);
+        }
+    }
+
+    public void AddPrompt(string newPromt)
+    {
+        _prompts.Add(newPromt);
+        using (StreamWriter outputFile = new StreamWriter("prompt.txt"))
+        {
+            foreach (string prompt in _prompts)
+            {
+                outputFile.WriteLine($"{prompt}");
+            }            
+        }        
+    }
+
+    public void PrintPromptList()
+    {
+        foreach (string prompt in _prompts)
+        {
+            Console.WriteLine($"{prompt}");
+        }
+    }
 
     public string GetRandomPrompt()
     {
+        int num = _prompts.Count;
         Random r = new Random();
-        int rInt = r.Next(0, 7);
+        int rInt = r.Next(0, num);
         string _prompt = _prompts[rInt];
         return _prompt;
     }

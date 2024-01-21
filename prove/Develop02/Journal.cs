@@ -7,7 +7,7 @@ public class Journal
 
     public void AddEntry(Entry newEntry)
     {
-        _entries.Add(newEntry);     
+        _entries.Add(newEntry);   
     }
 
     public void DisplayAll()
@@ -38,7 +38,7 @@ public class Journal
 
         foreach (string line in lines)
         {
-            string[] parts = line.Split("|");
+            string[] parts = line.Split(" | ");
             string date = parts[0];
             string promptText = parts[1];
             string entryText = parts[2];
